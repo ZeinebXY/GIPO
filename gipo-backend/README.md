@@ -1,7 +1,7 @@
 # GIPO — Backend (FastAPI)
 
 Auth backend for GIPO: signup, email verification, login, and forgot/reset
-password — using **Gmail SMTP** to send emails and **SQLite** to store
+password — using **Gmail SMTP** to send emails and **PostgreSQL** to store
 accounts.
 
 ## Setup
@@ -25,7 +25,12 @@ Then edit `.env`:
    ```bash
    python -c "import secrets; print(secrets.token_hex(32))"
    ```
-4. Leave `DATABASE_URL` and `FRONTEND_URL` as-is unless you change ports.
+4. **`DATABASE_URL`** — your Postgres connection string. Locally, install
+   Postgres (or run one via Docker: `docker run -d -p 5432:5432 -e
+   POSTGRES_PASSWORD=postgres postgres`) and point this at it, e.g.
+   `postgresql://postgres:postgres@localhost:5432/gipo`. In production,
+   Railway's Postgres addon gives you this string directly.
+5. Leave `FRONTEND_URL` as-is for local dev.
 
 Run it:
 
