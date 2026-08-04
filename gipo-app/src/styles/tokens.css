@@ -1,0 +1,150 @@
+/*
+  GIPO tokens — v3
+  - Chrome grays: sampled to match the logo's own "GIPO" letterforms.
+  - Gold/orange: the bubble's gold dot.
+  - The app's PRIMARY accent now flips with theme, following the logo's
+    own contrast: golden on the light plate, silver/chrome against the
+    dark bin interior. See --accent-* below, set per [data-theme].
+  - Ribbon (emerald -> teal -> indigo -> magenta): stays reserved for
+    the "transformation" signature only — the optimized-prompt strip,
+    the tool chip, and the orchestration panel — regardless of theme.
+*/
+
+:root {
+  /* --- Chrome grays: the wordmark, and only the wordmark / metal chrome --- */
+  --gipo-chrome-100: #f1f2f4;
+  --gipo-chrome-300: #cdd2d7;
+  --gipo-chrome-500: #8b929b;
+  --gipo-chrome-700: #52585f;
+  --gipo-chrome-900: #24272b;
+  --gipo-chrome-gradient: linear-gradient(
+    180deg,
+    var(--gipo-chrome-100) 0%,
+    var(--gipo-chrome-500) 42%,
+    var(--gipo-chrome-300) 55%,
+    var(--gipo-chrome-700) 100%
+  );
+
+  /* --- Gold / orange: primary accent, lifted from the bubble's gold dot --- */
+  --gipo-gold-200: #f1d9a3;
+  --gipo-gold-400: #e2b458;
+  --gipo-gold-500: #d9a441;
+  --gipo-amber-600: #c2751f;
+  --gipo-gold-gradient: linear-gradient(
+    135deg,
+    var(--gipo-gold-200) 0%,
+    var(--gipo-gold-500) 50%,
+    var(--gipo-amber-600) 100%
+  );
+  --gipo-gold-glow: rgba(217, 164, 65, 0.35);
+
+  /* --- Ribbon: transformation signature only (funnel + orchestration) --- */
+  --gipo-ribbon-1: #1f8a63;
+  --gipo-ribbon-2: #2b7f8f;
+  --gipo-ribbon-3: #5a5aa0;
+  --gipo-ribbon-4: #a8478a;
+  --gipo-ribbon: linear-gradient(
+    135deg,
+    var(--gipo-ribbon-1) 0%,
+    var(--gipo-ribbon-2) 38%,
+    var(--gipo-ribbon-3) 68%,
+    var(--gipo-ribbon-4) 100%
+  );
+
+  /* --- Bubble dots, thinking indicator only --- */
+  --gipo-dot-gold: #d9a441;
+  --gipo-dot-azure: #3f7fc1;
+  --gipo-dot-amethyst: #8a5cc4;
+
+  /* --- Type --- */
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.375rem;
+  --text-xl: 2.25rem;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+  --dur-med: 240ms;
+  --dur-slow: 420ms;
+}
+
+[data-theme='light'] {
+  --bg-canvas: #f4f5f7;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #ffffff;
+  --bg-sidebar: #eceef1;
+  --bg-composer: #ffffff;
+  --bg-hover: rgba(36, 39, 43, 0.05);
+  --bg-active: var(--accent-tint, rgba(217, 164, 65, 0.12));
+  --bg-user-bubble: #24272b;
+  --bg-assistant-bubble: #ffffff;
+
+  --text-primary: #1b1e22;
+  --text-secondary: #565c64;
+  --text-tertiary: #8b929b;
+  --text-on-dark: #f4f5f7;
+
+  --border-hairline: rgba(36, 39, 43, 0.1);
+  --border-strong: rgba(36, 39, 43, 0.18);
+
+  --focus-ring: var(--accent-solid);
+  --shadow-elev: 0 8px 30px rgba(24, 26, 29, 0.08);
+  --shadow-card: 0 1px 2px rgba(24, 26, 29, 0.06);
+
+  /* Primary accent: golden, like the logo reads against its light plate */
+  --accent: var(--gipo-gold-gradient);
+  --accent-solid: var(--gipo-amber-600);
+  --accent-glow: var(--gipo-gold-glow);
+  --accent-text: #241b0d;
+  --accent-tint: rgba(217, 164, 65, 0.12);
+}
+
+[data-theme='dark'] {
+  --bg-canvas: #16181b;
+  --bg-surface: #1d2024;
+  --bg-surface-raised: #24272b;
+  --bg-sidebar: #1a1c20;
+  --bg-composer: #24272b;
+  --bg-hover: rgba(244, 245, 247, 0.06);
+  --bg-active: var(--accent-tint, rgba(205, 210, 215, 0.14));
+  --bg-user-bubble: #3a3f45;
+  --bg-assistant-bubble: #1d2024;
+
+  --text-primary: #eef0f2;
+  --text-secondary: #a7adb4;
+  --text-tertiary: #6d747c;
+  --text-on-dark: #f4f5f7;
+
+  --border-hairline: rgba(244, 245, 247, 0.09);
+  --border-strong: rgba(244, 245, 247, 0.16);
+
+  --focus-ring: var(--accent-solid);
+  --shadow-elev: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+
+  /* Primary accent: silver/chrome, like the logo reads against the dark bin */
+  --accent: var(--gipo-chrome-gradient);
+  --accent-solid: var(--gipo-chrome-300);
+  --accent-glow: rgba(205, 210, 215, 0.28);
+  --accent-text: #1b1e22;
+  --accent-tint: rgba(205, 210, 215, 0.14);
+}
