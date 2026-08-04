@@ -1,0 +1,51 @@
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--bg-canvas);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+}
+
+.loading-overlay__bar-track {
+  width: 220px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-hover);
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-overlay__bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  border-radius: var(--radius-pill);
+  background: var(--gipo-gold-gradient);
+  box-shadow: 0 0 12px var(--gipo-gold-glow);
+  animation: gipo-bar-sweep 1.1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes gipo-bar-sweep {
+  0%   { left: -40%; }
+  100% { left: 100%; }
+}
+
+.loading-overlay__message {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-overlay__bar-fill {
+    animation: none;
+    left: 0;
+    width: 100%;
+  }
+}
