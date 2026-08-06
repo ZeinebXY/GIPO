@@ -15,8 +15,11 @@ def _require(name: str) -> str:
 
 
 class Settings:
-    GMAIL_USER: str = _require("GMAIL_USER")
-    GMAIL_APP_PASSWORD: str = _require("GMAIL_APP_PASSWORD")
+    RESEND_API_KEY: str = _require("RESEND_API_KEY")
+    # Defaults to Resend's built-in test sender, which works immediately with
+    # no domain verification — good enough while testing. Once you verify
+    # your own domain on Resend, set RESEND_FROM_EMAIL to an address on it.
+    RESEND_FROM_EMAIL: str = os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
 
     SECRET_KEY: str = _require("SECRET_KEY")
     ALGORITHM: str = "HS256"
