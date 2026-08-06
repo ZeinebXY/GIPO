@@ -15,11 +15,10 @@ def _require(name: str) -> str:
 
 
 class Settings:
-    RESEND_API_KEY: str = _require("RESEND_API_KEY")
-    # Defaults to Resend's built-in test sender, which works immediately with
-    # no domain verification — good enough while testing. Once you verify
-    # your own domain on Resend, set RESEND_FROM_EMAIL to an address on it.
-    RESEND_FROM_EMAIL: str = os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
+    BREVO_API_KEY: str = _require("BREVO_API_KEY")
+    # Must be an email address you've verified in Brevo (Senders & IP ->
+    # Senders). No default — Brevo rejects unverified senders.
+    BREVO_FROM_EMAIL: str = _require("BREVO_FROM_EMAIL")
 
     SECRET_KEY: str = _require("SECRET_KEY")
     ALGORITHM: str = "HS256"
