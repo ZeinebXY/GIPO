@@ -2,28 +2,29 @@ import requests
 
 from .config import settings
 
-RESEND_API_URL = "https://api.resend.com/emails"
+BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
 
 
 def _send_email(to_email: str, subject: str, html_body: str) -> None:
     response = requests.post(
-        RESEND_API_URL,
+        BREVO_API_URL,
         headers={
-            "Authorization": f"Bearer {settings.RESEND_API_KEY}",
+            "api-key": settings.BREVO_API_KEY,
             "Content-Type": "application/json",
+            "Accept": "application/json",
         },
         json={
-            "from": settings.RESEND_FROM_EMAIL,
-            "to": [to_email],
+            "sender": {"email": settings.BREVO_FROM_EMAIL, "name": "GIPO"},
+            "to": [{"email": to_email}],
             "subject": subject,
-            "html": html_body,
+            "htmlContent": html_body,
         },
         timeout=10,
     )
     if response.status_code >= 400:
-        # Surface Resend's own error message (e.g. bad API key, unverified
-        # sender domain) instead of a generic failure.
-        raise RuntimeError(f"Resend API error ({response.status_code}): {response.text}")
+        # Surface Brevo's own error message (e.g. unverified sender, bad API
+        # key) instead of a generic failure.
+        raise RuntimeError(f"Brevo API error ({response.status_code}): {response.text}")
 
 
 def send_verification_email(to_email: str, token: str) -> None:
