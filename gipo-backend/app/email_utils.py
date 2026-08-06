@@ -1,27 +1,29 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import requests
 
 from .config import settings
 
-GMAIL_SMTP_HOST = "smtp.gmail.com"
-GMAIL_SMTP_PORT = 587
+RESEND_API_URL = "https://api.resend.com/emails"
 
 
 def _send_email(to_email: str, subject: str, html_body: str) -> None:
-    message = MIMEMultipart("alternative")
-    message["Subject"] = subject
-    message["From"] = settings.GMAIL_USER
-    message["To"] = to_email
-    message.attach(MIMEText(html_body, "html"))
-
-    # Gmail app passwords are shown with spaces; SMTP wants them without.
-    app_password = settings.GMAIL_APP_PASSWORD.replace(" ", "")
-
-    with smtplib.SMTP(GMAIL_SMTP_HOST, GMAIL_SMTP_PORT) as server:
-        server.starttls()
-        server.login(settings.GMAIL_USER, app_password)
-        server.sendmail(settings.GMAIL_USER, to_email, message.as_string())
+    response = requests.post(
+        RESEND_API_URL,
+        headers={
+            "Authorization": f"Bearer {settings.RESEND_API_KEY}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "from": settings.RESEND_FROM_EMAIL,
+            "to": [to_email],
+            "subject": subject,
+            "html": html_body,
+        },
+        timeout=10,
+    )
+    if response.status_code >= 400:
+        # Surface Resend's own error message (e.g. bad API key, unverified
+        # sender domain) instead of a generic failure.
+        raise RuntimeError(f"Resend API error ({response.status_code}): {response.text}")
 
 
 def send_verification_email(to_email: str, token: str) -> None:
